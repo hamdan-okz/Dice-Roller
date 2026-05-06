@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding-top: 100px;
+        }
+
+        .dice {
+            font-size: 100px;
+            margin: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #e74c3c;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c0392b;
+        }
+
+        #result {
+            font-size: 24px;
+            margin-top: 15px;
+        }
+
+        /* Shake animation */
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            50% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎲 Dice Roller</h1>
+    
+    <div class="dice" id="dice">🎲</div>
+    
+    <button onclick="rollDice()">Roll Dice</button>
+    
+    <div id="result">Result: -</div>
+
+    <script>
+        function rollDice() {
+            const dice = document.getElementById("dice");
+            const result = document.getElementById("result");
+            const diceFaces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+
+            // Add shake animation
+            dice.classList.add("shake");
+
+            let counter = 0;
+            const interval = setInterval(() => {
+                dice.innerText = diceFaces[Math.floor(Math.random() * 6)];
+                counter++;
+                if (counter > 10) { // after 10 cycles, stop
+                    clearInterval(interval);
+                    dice.classList.remove("shake");
+
+                    const randomNumber = Math.floor(Math.random() * 6) + 1;
+                    dice.innerText = diceFaces[randomNumber - 1];
+                    result.innerText = "Result: " + randomNumber;
+                }
+            }, 100); // change face every 100ms
+        }
+    </script>
+
+</body>
+</html>
